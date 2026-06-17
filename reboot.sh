@@ -1,11 +1,15 @@
-#!/bin/bash
-# This is a SHELL programme to reboot the bedrock server
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Stop the bedrock server
-~/bedrock/stop.sh $1
+# Load common settings
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+. "$SCRIPT_DIR/common.sh"
 
-# Wait until the bedrock server stops
+# Forward any args to stop.sh
+"$SCRIPT_DIR/stop.sh" "$@"
+
+# Short pause to let the process stop
 sleep 3
 
-# Restart the bedrock server
-~/bedrock/run.sh
+# Start server
+"$SCRIPT_DIR/run.sh"

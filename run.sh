@@ -1,12 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-RUN_STATUS_MC=`screen -ls | grep minecraftBe | grep -v S-minecraft | wc -w`
+# Load common settings
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+. "$SCRIPT_DIR/common.sh"
 
-if [ $RUN_STATUS_MC -eq 0 ]; then    # minecraftという名前のscreenがなければ新しく作る
-        # Start the bedrock server
-        echo starting new server
-        cd ~/bedrock/server/
-        screen -dm -S minecraftBe /bin/bash -c ~/bedrock/server/bedrock_server
-else
-        echo "Server already running.\n"    # minecraftというscreenがあるならばホストは実行中
+if screen -ls | grep -q "${SCREEN_NAME}"; then
+  echo "Server already running."
+  exit 0
 fi
+
+echo "Starting new server"
+cd "$SERVER_DIR"
+screen -dm -S "$SCREEN_NAME" /bin/bash -c "$SERVER_DIR/bedrock_server"
