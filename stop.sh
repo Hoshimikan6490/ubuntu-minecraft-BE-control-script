@@ -62,4 +62,9 @@ screen -S "${SCREEN_NAME}" -p 0 -X stuff 'tellraw @a {"rawtext":[{"text":"サー
 # Shutting down the host
 screen -S "${SCREEN_NAME}" -p 0 -X stuff 'stop\015'
 
+# Wait for screen to exit
+while screen -ls | grep -q "${SCREEN_NAME}"; do
+    sleep 1
+done
+
 echo ended
