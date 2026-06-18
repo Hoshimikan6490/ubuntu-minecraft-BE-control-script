@@ -18,9 +18,9 @@ if ! screen -ls | grep -q "${SCREEN_NAME}"; then
 fi
 
 # Display presets
-STR_1="tellraw @a {\"rawtext\":[{\"text\":\"[SERVER] シャットダウン "
-STR_2=" 秒前\"}]}\\015"
-STR_3=" 分前\"}]}\\015"
+STR_1="tellraw @a {\"rawtext\":[{\"text\":\"§c[SERVER] "
+STR_2=" 秒後にシャットダウンします。\"}]}\\015"
+STR_3=" 分後にシャットダウンします。\"}]}\\015"
 
 # 3分以上をカウントする場合に備えてやや冗長な記述になってます
 count_down() {
@@ -47,17 +47,17 @@ count_down() {
 # Check if immediate shutdown is requested
 if [ "$IMMEDIATE" = true ]; then
     # Immediate shutdown
-    screen -S "${SCREEN_NAME}" -p 0 -X stuff 'tellraw @a {"rawtext":[{"text":"[SERVER] サーバーを直ちにシャットダウンします。"}]}\015'
+    screen -S "${SCREEN_NAME}" -p 0 -X stuff 'tellraw @a {"rawtext":[{"text":"§c[SERVER] サーバーを直ちにシャットダウンします。"}]}\015'
     sleep 1
 else
     # Display the announcement of shutting down
-    screen -S "${SCREEN_NAME}" -p 0 -X stuff 'tellraw @a {"rawtext":[{"text":"[SERVER] このサーバーは５分後にシャットダウンします。"}]}\015'
+    screen -S "${SCREEN_NAME}" -p 0 -X stuff 'tellraw @a {"rawtext":[{"text":"§c[SERVER] このサーバーは５分後にシャットダウンします。"}]}\015'
     # count down to stop the bedrock server
     count_down
 fi
 
 # Ending message
-screen -S "${SCREEN_NAME}" -p 0 -X stuff 'tellraw @a {"rawtext":[{"text":"サーバーをシャットダウンしています..."}]}\015'
+screen -S "${SCREEN_NAME}" -p 0 -X stuff 'tellraw @a {"rawtext":[{"text":"§c[SERVER] サーバーをシャットダウンしています..."}]}\015'
 
 # Shutting down the host
 screen -S "${SCREEN_NAME}" -p 0 -X stuff 'stop\015'
