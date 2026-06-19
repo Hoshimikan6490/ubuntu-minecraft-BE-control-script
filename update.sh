@@ -60,6 +60,9 @@ cp "$SERVER_DIR/permissions.json" "$TEMP_DIR/"
 log_info "replicating allowlist.json"
 cp "$SERVER_DIR/allowlist.json" "$TEMP_DIR/"
 
+log_info "replicating config"
+cp "$SERVER_DIR/config/default/permissions.json" "$TEMP_DIR/config.json"
+
 log_info "all replication done"
 
 cd "$SERVER_DIR" || exit 1
@@ -87,6 +90,9 @@ cp "$TEMP_DIR/allowlist.json" "$SERVER_DIR/"
 
 log_info "recovering worlds"
 cp -r "$TEMP_DIR/worlds" "$SERVER_DIR/"
+
+log_info "recovering config"
+cp "$TEMP_DIR/config.json" "$SERVER_DIR/config/default/permissions.json"
 
 log_info "all recovery done"
 
